@@ -1,38 +1,19 @@
-from typing import List, Dict
+from collections import Counter
 
 
 class SimpleReport:
-    @staticmethod
-    def generate(product_list: List[Dict]) -> str:
-        now = datetime.datetime.now()
-
-        manufacturing = [
-            product["data_de_fabricacao"] for product in product_list
-        ]
-
-        expiration = [
-            product["data_de_validade"] for product in product_list
-            if product["data_de_validade"] > now.strftime("%Y-%m-%d")
-        ]
-
-        companies = [
-            product["nome_da_empresa"] for product in product_list
-        ]
-
-        count_by_company = {
-            f"{company}": companies.count(company)
-            for company in companies
-        }
-
-        older_manufacturing = min(manufacturing)
-        closest_expiration = max(expiration)
-        most_products_company = max(
-            count_by_company,
-            key=count_by_company.get
+    def generate(products):
+        oldest_manufacturing_date = min(
+            product["data_de_fabricacao"] for product in products
         )
-
+        closest_expiration_date = min(
+            product["data_de_validade"] for product in products
+        )
+        company_with_most_products = Counter(
+            product["nome_da_empresa"] for product in products
+        ).most_common(1)[0][0]
         return (
-            f"Data de fabricação mais antiga: {older_manufacturing}\n"
-            f"Data de validade mais próxima: {closest_expiration}\n"
-            f"Empresa com mais produtos: {most_products_company}"
+            f"Data de fabricação mais antiga: {oldest_manufacturing_date}\n"
+            f"Data de validade mais próxima: {closest_expiration_date}\n"
+            f"Empresa com mais produtos: {company_with_most_products}"
         )
