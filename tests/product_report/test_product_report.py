@@ -1,19 +1,21 @@
 from inventory_report.inventory.product import Product
 
 
-def test_relatorio_produto():
-    product = Product(
-        id=1,
-        nome_do_produto="Test product",
-        nome_da_empresa="Test company",
-        data_de_fabricacao="2020-10-20",
-        data_de_validade="2021-10-20",
-        numero_de_serie=12345,
-        instrucoes_de_armazenamento="Instructions"
+def test_cria_produto():
+    created_product = Product(
+        1,
+        "Nicotine Polacrilex",
+        "Target Corporation",
+        "2021-02-18",
+        "2023-09-17",
+        1551,
+        "instrucao 1"
     )
 
-    assert str(product.__repr__()) == f"O produto {product.nome_do_produto}\
- fabricado em {product.data_de_fabricacao} por\
- {product.nome_da_empresa} com validade até\
- {product.data_de_validade} precisa ser armazenado\
- {product.instrucoes_de_armazenamento}."
+    assert created_product.id == 1
+    assert created_product.nome_do_produto == "Nicotine Polacrilex"
+    assert created_product.nome_da_empresa == "Target Corporation"
+    assert created_product.data_de_fabricacao == "2021-02-18"
+    assert created_product.data_de_validade == "2023-09-17"
+    assert created_product.numero_de_serie == 1551
+    assert created_product.instrucoes_de_armazenamento == "instrucao 1"
